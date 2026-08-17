@@ -1,0 +1,32 @@
+#include<stdio.h>
+#include<unistd.h>
+void main() {
+   int p2;
+   p2 = fork();
+   if (p2==0) {
+       int p4;
+       p4 = fork();
+       if (p4==0) {
+	  printf("P4\tProcess id :%d\t Parent id:%d \n",getpid(),getppid()); }
+       else {
+	  printf("P2\tProcess id :%d\tParent id:%d\n",getpid(),getppid());}
+   }
+   else {
+       int p3;
+       p3 = fork();
+       if (p3==0) {
+           int p5;
+	   p5 = fork();
+	   if(p5==0) {
+	       printf("P5\tProcess id :%d\t Parent id:%d\n",getpid(),getppid());
+	    }
+	    else {
+	       printf("P3\tProcess id :%d\t Parent id:%d\n",getpid(),getppid()); 
+            }
+	}
+	else {
+	    printf("P1\tProcess id :%d\n",getpid());
+	}
+    }
+ }
+
