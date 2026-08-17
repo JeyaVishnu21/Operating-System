@@ -1,0 +1,46 @@
+  #include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+void medi(int n, int arr[]) {
+   int i, j;
+   for (i = 0; i < n - 1; i++) {
+      for (j = 0; j < n - 1 - i; j++) {
+         if (arr[j] > arr[j + 1]) {
+            int t = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = t;
+         }
+      }
+   }
+   
+   double median; 
+   if (n % 2 == 0) {
+      median = (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
+   }
+   else {
+      median = arr[n / 2];
+   }
+   printf("Median : %.2f\n", median);
+}
+
+int main() {
+   int p2, n, i;
+   printf("Enter the value of n : ");
+   scanf("%d", &n);
+   int arr[n]; 
+   for(i = 0; i < n; i++) {
+      scanf("%d", &arr[i]);
+   }
+   p2 = fork();
+   if (p2 == 0) {
+      printf("Child Processing environment\n");
+      return 0; 
+   }
+   else {
+      wait(NULL); 
+      printf("Parent Computing median...\n");
+      medi(n, arr); 
+   }
+   return 0;
+}
